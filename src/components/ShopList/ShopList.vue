@@ -144,6 +144,7 @@
             <div class="shop_left">
               <img class="shop_img" src="./images/shop/4.jpg">
             </div>
+            <input type="text" >
             <div class="shop_right">
               <section class="shop_detail_header">
                 <h4 class="shop_title ellipsis">锄禾日当午，汗滴禾下土</h4>
@@ -189,8 +190,9 @@
 </template>
 
 <script>
+  import Vue from 'vue'
     export default {
-        name: "ShopList"
+
     }
 </script>
 
