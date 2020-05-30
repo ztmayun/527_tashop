@@ -1,6 +1,8 @@
 <template>
   <!--首页附近商家-->
   <div class="msite_shop_list">
+
+
     <div class="shop_header">
       <i class="iconfont icon-xuanxiang"></i>
       <span class="shop_header_title">附近商家</span>
@@ -192,7 +194,16 @@
 <script>
   import Vue from 'vue'
     export default {
-
+      props: ['msg'],
+      data () {
+        return {
+          data: {}
+        }
+      },
+      mounted() {
+        const {$route} = this
+        console.log($route.fullPath);
+      }
     }
 </script>
 

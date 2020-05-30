@@ -119,7 +119,7 @@
         <div class="swiper-pagination"></div>
       </div>
     </nav>
-    <ShopList></ShopList>
+    <ShopList :msg="msg"></ShopList>
 
   </div>
 </template>
@@ -133,6 +133,11 @@
   import ShopList from "../../components/ShopList/ShopList";
   export default {
     name: "MSite",
+    data () {
+      return {
+        msg: 'hello world'
+      }
+    },
     components: {
       HeaderTop,
       ShopList

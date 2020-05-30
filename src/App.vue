@@ -12,11 +12,14 @@
 
 <script>
   import FooterGuide from "./components/FooterGuide/FooterGuide";
-
+  import {reqAddress1} from './api'
   export default {
     name: "App",
     components: {
       'footer-guide': FooterGuide
+    },
+    mounted () {
+      this.$store.dispatch('getAddress');
     }
 
   }

@@ -12,8 +12,10 @@
         <form>
           <div :class="{on: loginWay}" >
             <section class="login_message">
-              <input type="tel" maxlength="11" placeholder="手机号">
-              <button disabled="disabled" class="get_verification">获取验证码</button>
+              <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
+              <button :disabled="!phoneSize" :class="{verOn: phoneSize}" class="get_verification" @click.prevent="getCode">
+                {{this.codeTime>0? `已发(${this.codeTime})s` : '获取验证码'}}
+              </button>
             </section>
             <section class="login_verification">
               <input type="tel" maxlength="8" placeholder="验证码">
@@ -29,10 +31,11 @@
                 <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名">
               </section>
               <section class="login_verification">
-                <input type="tel" maxlength="8" placeholder="密码">
-                <div class="switch_button off">
-                  <div class="switch_circle"></div>
-                  <span class="switch_text">...</span>
+                <input type="text" maxlength="8" placeholder="密码" v-if="showPwd" v-model="pwd">
+                <input type="password" maxlength="8" placeholder="密码" v-else v-model="pwd">
+                <div class="switch_button" :class="showPwd?'on':'off'" @click="showPwd=!showPwd">
+                  <div class="switch_circle" :class="{right:showPwd}"></div>
+                  <span class="switch_text">{{showPwd ? 'abc' : '...'}}</span>
                 </div>
               </section>
               <section class="login_message">
@@ -55,7 +58,35 @@
 <script>
     export default {
       data () {
-          return{loginWay: true}
+          return{
+            loginWay: true,
+            phone: '',
+            codeTime: 0,
+            showPwd: false,
+            pwd: ''
+          }
+      },
+      computed: {
+        phoneSize () {
+          return /^1\d{10}$/.test(this.phone);
+        }
+      },
+      methods: {
+        getCode () {
+        //已发送(mm)s
+         if (!this.codeTime) {
+           //后面需要改为60
+           this.codeTime= 30;
+           var intervalId = setInterval(() => {
+               this.codeTime--;
+               if (!this.codeTime)
+                 clearInterval(intervalId);
+           }, 1000);
+
+           //发送请求
+
+         }
+        }
       }
     }
 </script>
@@ -121,6 +152,9 @@
                 color #ccc
                 font-size 14px
                 background transparent
+                outline none
+                &.verOn
+                  color #000
             .login_verification
               position relative
               margin-top 16px
@@ -160,6 +194,8 @@
                   background #fff
                   box-shadow 0 2px 4px 0 rgba(0,0,0,.1)
                   transition transform .3s
+                  &.right
+                    transform translateX(30px)
             .login_hint
               margin-top 12px
               color #999

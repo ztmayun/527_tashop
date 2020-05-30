@@ -10,8 +10,8 @@ import axios from 'axios'
 export default function ajax(url, data = {}, type = 'GET') {
   return new Promise(function (resolve, reject) {
     let promise;
-
-    if (type.toString().toUpperCase() == 'GET') {
+    type = type.toString().toUpperCase();
+    if (type == 'GET') {
 
       // GET请求 ，将数据拼接到url上
       let dataStr = '' //数据拼接字符串
